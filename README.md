@@ -11,7 +11,7 @@
 #### A sleek, interactive CLI business card - showcasing contact links, resume also more right from your terminal.
 
 [![status](https://img.shields.io/badge/status-active-brightgreen.svg?style=flat)](https://github.com/xodivorce/npm-xodivorce/)
-[![version](https://img.shields.io/badge/version-v1.1.2-yellow.svg?style=flat)](https://github.com/xodivorce/npm-xodivorce/)
+[![version](https://img.shields.io/badge/version-v1.2.0-yellow.svg?style=flat)](https://github.com/xodivorce/npm-xodivorce/)
 [![PRs](https://img.shields.io/badge/PRs-welcome-blue.svg?style=flat)](https://github.com/xodivorce/npm-xodivorce/)
 
 > **🥰 Like this project? Please consider giving it a Star (🌟) on GitHub to show us your appreciation. Thank you!**

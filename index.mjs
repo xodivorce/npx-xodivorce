@@ -4,21 +4,24 @@ import chalk from "chalk";
 import boxen from "boxen";
 import inquirer from "inquirer";
 import open from "open";
-
+import fs from "fs";
+import os from "os";
+import path from "path";
+import axios from "axios";
 
 const newline = "\n";
 const label = (text) => chalk.bold.white(text.padEnd(14));
 
 const data = {
   name: chalk.bold.white("Prasid Mandal"),
-  title: chalk.gray("Web Developer & CS Student"),
+  title: chalk.gray("Web Developer & CSE Student"),
   github: chalk.white("https://github.com/xodivorce"),
   linkedin: chalk.white("https://linkedin.com/in/xodivorce"),
   instagram: chalk.white("https://instagram.com/xodivorce"),
   web: chalk.white("https://www.xodivorce.in"),
   card: chalk.gray("npx") + " " + chalk.bold.white("xodivorce"),
-  email: "hey@xodivorce.in",
-  tagline: chalk.gray("On A Mission To Make The Web More Interesting.."),
+  email: "prasidmandal79@gmail.com",
+  tagline: chalk.gray("On A Mission To, Make The Web More Interesting.."),
 };
 
 const content = [
@@ -45,13 +48,11 @@ const boxed = boxen(content, {
 
 console.log(boxed);
 
-// Graceful exit on Ctrl+C
 process.on("SIGINT", () => {
   console.log("\n" + chalk.bold.white("Exited gracefully."));
   process.exit(0);
 });
 
-// Main prompt
 inquirer
   .prompt([
     {
@@ -77,16 +78,35 @@ inquirer
         {
           name: chalk.white("📄  View Resume"),
           value: async () => {
-            const fileUrl = "https://xodivorce.in/core/pdf_config.php";
+            const url = "https://xodivorce.in/core/pdf_config.php";
+            const filePath = path.join(os.tmpdir(), "Prasid-mandal-resume.pdf");
+
             try {
-              console.log(chalk.gray("→ Opening resume in browser..."));
-              await open(fileUrl);
-              console.log(
-                chalk.green("✔ Resume opened in your default browser.")
-              );
+              console.log(chalk.gray("→ Downloading resume..."));
+
+              const response = await axios({
+                url,
+                method: "GET",
+                responseType: "stream",
+              });
+
+              const writer = fs.createWriteStream(filePath);
+              response.data.pipe(writer);
+
+              await new Promise((resolve, reject) => {
+                writer.on("finish", resolve);
+                writer.on("error", reject);
+              });
+
+              console.log(chalk.green("✔ Resume downloaded."));
+              console.log(chalk.gray("→ Opening resume..."));
+
+              await open(filePath);
+
+              console.log(chalk.green("✔ Resume opened locally."));
             } catch (error) {
               console.error(
-                chalk.red("✖ Failed to open resume:"),
+                chalk.red("✖ Failed to download/open resume:"),
                 chalk.gray(error?.message || "Unknown error")
               );
             }
@@ -112,19 +132,11 @@ inquirer
         {
           name: chalk.gray("x   Exit"),
           value: () => {
-            try {
-              console.log("");
-              console.log(chalk.bold.white("Thank you!"));
-              console.log(chalk.gray("Have a great day."));
-              console.log("");
-              process.exit(0);
-            } catch (error) {
-              console.error(
-                chalk.red("✖ Failed to exit:"),
-                chalk.gray(error?.message || "Unknown error")
-              );
-              process.exit(1);
-            }
+            console.log("");
+            console.log(chalk.bold.white("Thank you!"));
+            console.log(chalk.gray("Have a great day."));
+            console.log("");
+            process.exit(0);
           },
         },
       ],
