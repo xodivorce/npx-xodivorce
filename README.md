@@ -1,7 +1,7 @@
 ## Npx-xodivorce
 
 ### 👀 Preview
-<img src="./images/npm-xodivorce-preview.png" alt="npm-xodivorce-preview">
+<img src="https://raw.githubusercontent.com/xodivorce/npm-xodivorce/main/images/npm-xodivorce-preview.png">
 
 > **Run this in your terminal to view the card.**
    ```bash
