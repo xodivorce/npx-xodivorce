@@ -1,3 +1,4 @@
 # .npmignore
+images/
 .vscode/
 node_modules/
